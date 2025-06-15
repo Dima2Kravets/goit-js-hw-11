@@ -27,7 +27,7 @@ function handleSubmit(event) {
 
   hideLoader();
 
-  axios(`https://pixabay.com/api?${params}`)
+  axios(`https://pixabay.com/api/?${params}`)
     .then(response => {
       const hits = response.data.hits;
       if (hits.length === 0) {
