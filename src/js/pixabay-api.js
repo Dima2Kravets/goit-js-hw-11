@@ -7,5 +7,5 @@ export function getImagesByQuery(query) {
     orientation: 'horizontal',
     safesearch: 'true',
   });
-  return axios(`https://pixabay.com/api/?${params}`);
+  return axios(`https://pixabay.com/api/?${params}`).then(resp => resp.data);
 }

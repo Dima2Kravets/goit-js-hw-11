@@ -21,12 +21,11 @@ function handleSubmit(event) {
   const query = event.target.elements[0].value.trim();
   if (!query) return;
 
-  hideLoader();
+  showLoader();
 
   getImagesByQuery(query)
     .then(response => {
-      const hits = response.data.hits;
-      if (hits.length === 0) {
+      if (response.hits.length === 0) {
         iziToast.error({
           message:
             'Sorry, there are no images matching your search query. Please try again!',
@@ -35,14 +34,18 @@ function handleSubmit(event) {
         clearGallery();
         return;
       }
-      gallery.innerHTML = createGallery(hits);
+      gallery.innerHTML = createGallery(response.hits);
       lightbox.refresh();
     })
     .catch(error => {
       console.error('Error:', error);
-      gallery.innerHTML = '<p>Error loading images</p>';
+      hideLoader();
+      iziToast.error({
+        message: 'Error loading images',
+        position: `topRight`,
+      });
     })
     .finally(() => {
-      showLoader();
+      hideLoader();
     });
 }
